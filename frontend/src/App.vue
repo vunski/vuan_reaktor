@@ -35,6 +35,8 @@ export default {
     }
   },
   async created() {
+    // On local change url to http://localhost:<port>/api/packages
+    // And change the port to the same as the backend (default: 3000)
     let url = '/api/packages';
 
     const response = await axios.get(url);
@@ -44,7 +46,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 * {
   user-select: none;
 }

@@ -10,7 +10,7 @@ On a Debian and Ubuntu systems, there is a file called /var/lib/dpkg/status that
 
 ### Prerequisites
 
-Change the url in frontend `App.vue` line 40 to `http://localhost:3000/api/packages`.
+Change the url in frontend `App.vue` line 40 to `http://localhost:3000/api/packages`.\
 To use your own`status`file add the path in backend `index.js` line 9.
 
 ### Installing

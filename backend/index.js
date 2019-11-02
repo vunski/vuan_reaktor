@@ -5,8 +5,11 @@ const app = express();
 const cors = require('cors');
 app.use(cors());
 
+//Path to status file
+const filePath = './file/status.real';
+
 const rl = readline.createInterface({
-  input: fs.createReadStream('./file/status.real')
+  input: fs.createReadStream(filePath)
 });
 
 let packageArr = [],

@@ -17,9 +17,15 @@ To use your own`status`file add the path in backend `index.js` line 9.
 
 Install dependencies and run in dev mode.
 
+### Frontend (Port 8080)
 ```
 1. npm install / yarn install
 2. npm run dev / yarn dev
+```
+### Backend (Port 3000)
+```
+1. npm install / yarn install
+2. npm run start / yarn start
 ```
 
 ## Built With

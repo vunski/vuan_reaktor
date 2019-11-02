@@ -18,8 +18,8 @@ To use your own`status`file add the path in backend `index.js` line 9.
 Install dependencies and run in dev mode.
 
 ```
-npm install / yarn install
-npm run dev / yarn dev
+1. npm install / yarn install
+2. npm run dev / yarn dev
 ```
 
 ## Built With

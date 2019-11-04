@@ -1,7 +1,8 @@
 # Reaktor Pre-assignment
 
-My craziest solution to this assignment. A small program to read `status` file.\
-If your current operating system is linux the program will read your system's status file.\ On Windows it will the file from `./backend/file/status.real`.
+My craziest solution to this assignment. A small program to read `status` file.  
+If your current operating system is linux the program will read your system's status file.  
+On Windows it will read the file from `./backend/file/status.real`.  
 
 ### [VP Reaktor demo link](https://vuanpham.me/reaktor).
 
@@ -11,7 +12,7 @@ On a Debian and Ubuntu systems, there is a file called /var/lib/dpkg/status that
 
 ### Prerequisites
 
-~~Change the url in frontend `App.vue` line 40 to `http://localhost:3000/api/packages`.~~\
+~~Change the url in frontend `App.vue` line 40 to `http://localhost:3000/api/packages`.~~  
 
 ~~To use your own`status`file add the path in backend `index.js` line 9.~~
 

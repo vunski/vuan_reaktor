@@ -6,7 +6,8 @@ const cors = require('cors');
 app.use(cors());
 
 //Path to status file
-const filePath = './file/status.real';
+const os = process.platform;
+const filePath = os === 'linux' ? '/var/lib/dpkg/status' : './file/status.real';
 
 const rl = readline.createInterface({
   input: fs.createReadStream(filePath)
@@ -45,7 +46,11 @@ rl.on('close', () => {
 });
 
 app.get('/api/packages', (req, res) => {
-  res.status(200).send(packageArr);
+  try {
+    res.status(200).send(packageArr);
+  } catch (err) {
+    res.status(400).send({ err });
+  }
 });
 
 const port = 3000,

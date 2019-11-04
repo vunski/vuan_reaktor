@@ -35,9 +35,11 @@ export default {
     }
   },
   async created() {
-    // On local change url to http://localhost:<port>/api/packages
-    // And change the port to the same as the backend (default: 3000)
-    let url = '/api/packages';
+    // If running in development, request sent to localhost backend port 3000
+    let url =
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:3000/api/packages'
+        : '/api/packages';
 
     const response = await axios.get(url);
     const data = response.data;

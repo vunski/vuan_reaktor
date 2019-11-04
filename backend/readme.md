@@ -8,4 +8,4 @@ On Windows it will the file from `./backend/file/status.real`.
 
 ## Information
 
-Reads stats file and provides an endpoint `/api/package/`, which contains all the packages as objects from the stats file.
+Reads status file and provides an endpoint `/api/package/`, which contains all the packages as objects from the status file.

@@ -11,9 +11,7 @@
             {{ item.description }}
           </v-card-text>
 
-          <v-card-title class="headline">
-            Depends on packages ({{ splitDepends.length }})
-          </v-card-title>
+          <v-card-title class="headline"> Dependencies ({{ dependencies.length }}) </v-card-title>
           <v-divider />
           <v-card-text v-if="item.depends">
             <v-btn
@@ -21,30 +19,28 @@
               class="mt-3 mr-1"
               dark
               small
-              v-for="depend in splitDepends"
-              :key="`${depend}14`"
-              v-html="depend"
-              @click="findPackage(depend)"
+              v-for="dependency in dependencies"
+              :key="`${dependency}14`"
+              v-html="dependency"
+              @click="findPackage(dependency)"
             />
           </v-card-text>
           <v-card-text v-else>
             None
           </v-card-text>
 
-          <v-card-title class="headline">
-            Packages depending on {{ item.package }} ({{ dependsOn.length }})
-          </v-card-title>
+          <v-card-title class="headline"> Reverse Dependencies ({{ reverseDependencies.length }}) </v-card-title>
           <v-divider />
-          <v-card-text v-if="dependsOn.length > 0">
+          <v-card-text v-if="reverseDependencies.length > 0">
             <v-btn
               rounded
               class="mt-3 mr-1"
               dark
               small
-              v-for="depend in dependsOn"
-              :key="`${depend.package}19`"
-              v-html="depend.package"
-              @click="aboutPackage(depend)"
+              v-for="dependencies in reverseDependencies"
+              :key="`${dependencies.package}19`"
+              v-html="dependencies.package"
+              @click="aboutPackage(dependencies)"
             />
           </v-card-text>
           <v-card-text v-else>
@@ -62,7 +58,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 export default {
   data: function() {
@@ -80,33 +76,40 @@ export default {
     },
     filterDuplicates: function(array) {
       return array.filter((v, i) => array.indexOf(v) === i);
+    },
+    removeBracket: function(item) {
+      let indexOfBracket = item.indexOf("(");
+      return indexOfBracket !== -1 ? item.slice(0, indexOfBracket - 1).trim() : item.trim();
+    },
+    dependenciesToArr: function(dependencies) {
+      let dependenciesArr = dependencies.depends
+        .split("|")
+        .join(",")
+        .split(",");
+      return dependenciesArr;
     }
   },
   computed: {
-    ...mapGetters(['packages']),
-    splitDepends: function() {
+    ...mapGetters(["packages"]),
+    dependencies: function() {
       if (this.item.depends) {
-        let dependsArr = this.item.depends
-          .split('|')
-          .join(',')
-          .split(',');
-        let splittedArr = dependsArr.map(item => {
-          let indexOfBracket = item.indexOf('(');
-          return indexOfBracket !== -1
-            ? item.slice(0, indexOfBracket - 1).trim()
-            : item.trim();
-        });
+        let splittedArr = this.dependenciesToArr(this.item).map(item => this.removeBracket(item));
         return this.filterDuplicates(splittedArr);
       }
+      // IF the current package doesn't have any dependencies, return an empty array
       return [];
     },
-    dependsOn: function() {
+    reverseDependencies: function() {
       let dependsOnArr = this.packages.filter(pckg => {
-        if (pckg.depends && pckg.package !== this.item.package)
-          return pckg.depends.includes(this.item.package);
+        if (pckg.depends && pckg.package !== this.item.package) {
+          let splittedArr = this.dependenciesToArr(pckg).map(dependency => this.removeBracket(dependency));
+          let a = splittedArr.find(dependency => dependency === this.item.package);
+          if (a) return true;
+        }
       });
-
       return this.filterDuplicates(dependsOnArr);
+      // IF the current package doesn't have any reverse dependencies, return an empty array
+      return [];
     }
   }
 };

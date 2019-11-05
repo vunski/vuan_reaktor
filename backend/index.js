@@ -1,13 +1,14 @@
-const fs = require('fs');
-const readline = require('readline');
-const express = require('express');
+const fs = require("fs");
+const readline = require("readline");
+const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 app.use(cors());
 
 //Path to status file
 const os = process.platform;
-const filePath = os === 'linux' ? '/var/lib/dpkg/status' : './file/status.real';
+//const filePath = os === 'linux' ? '/var/lib/dpkg/status' : './file/status.real';
+const filePath = "./file/status.real";
 
 const rl = readline.createInterface({
   input: fs.createReadStream(filePath)
@@ -15,15 +16,15 @@ const rl = readline.createInterface({
 
 let packageArr = [],
   packageObj = {},
-  packageKey = '';
+  packageKey = "";
 
 const resetPackageObj = () => {
   packageObj = {};
-  packageKey = '';
+  packageKey = "";
 };
 
-rl.on('line', line => {
-  let indexOfColon = line.indexOf(':'),
+rl.on("line", line => {
+  let indexOfColon = line.indexOf(":"),
     lineKey = line.slice(0, indexOfColon).toLowerCase(),
     lineValue = line.slice(indexOfColon + 1).trim(),
     hasSpaceAtStart = /^\s/.test(line);
@@ -39,13 +40,11 @@ rl.on('line', line => {
   }
 });
 
-rl.on('close', () => {
-  packageArr.sort((a, b) =>
-    a.package > b.package ? 1 : b.package > a.package ? -1 : 0
-  );
+rl.on("close", () => {
+  packageArr.sort((a, b) => (a.package > b.package ? 1 : b.package > a.package ? -1 : 0));
 });
 
-app.get('/api/packages', (req, res) => {
+app.get("/api/packages", (req, res) => {
   try {
     res.status(200).send(packageArr);
   } catch (err) {
@@ -54,8 +53,6 @@ app.get('/api/packages', (req, res) => {
 });
 
 const port = 3000,
-  host = '0.0.0.0';
+  host = "0.0.0.0";
 
-app.listen(port, host, () =>
-  console.log(`Backend listening to port: ${port}!`)
-);
+app.listen(port, host, () => console.log(`Backend listening to port: ${port}!`));

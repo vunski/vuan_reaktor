@@ -7,8 +7,7 @@ app.use(cors());
 
 //Path to status file
 const os = process.platform;
-//const filePath = os === 'linux' ? '/var/lib/dpkg/status' : './file/status.real';
-const filePath = "./file/status.real";
+const filePath = os === "linux" ? "/var/lib/dpkg/status" : "./file/status.real";
 
 const rl = readline.createInterface({
   input: fs.createReadStream(filePath)

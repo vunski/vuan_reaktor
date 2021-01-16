@@ -4,7 +4,7 @@ My craziest solution to this assignment. A small program to read `status` file.
 If your current operating system is linux the program will read your system's status file.  
 On Windows it will read the file from `./backend/file/status.real`.  
 
-### [VP Reaktor demo link](https://vuanpham.me/reaktor).
+### [VP Reaktor demo link](https://vuanpham.com/reaktor).
 
 ## Assignment
 
